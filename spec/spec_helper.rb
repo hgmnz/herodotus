@@ -1,4 +1,4 @@
 require 'minitest/autorun'
-require 'minitest/spec'
+require 'ruby-debug'
 
 require File.expand_path(File.join('lib', 'herodotus'))
