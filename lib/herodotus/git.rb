@@ -6,9 +6,8 @@ module Herodotus
       @repo     = ::Grit::Repo.new(guess_repo)
     end
 
-    def commits(since_ref)
-      since_ref ||= nil
-      ::Grit::Commit.find_all(@repo, since_ref)
+    def commits
+      ::Grit::Commit.find_all(@repo, nil)
     end
 
     private

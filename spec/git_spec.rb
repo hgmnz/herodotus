@@ -3,27 +3,33 @@ require 'ruby-debug'
 
 describe Herodotus::Git do
 
+  def git
+    @git ||= Herodotus::Git.new('tmp/bacon')
+  end
+
   before do
-    # TODO: FakeFS. Don't have the gem, and don't have internet, so moving forward with ugly mocks
-    # Can't stub a method on existing objects with minitest mocks
-    def File.expand_path(dir, root=nil); root ? "/#{root}/#{dir}" : dir; end
-    def File.directory?(dir); true; end
-
-    grit_repo = MiniTest::Mock.new
-
-    ::Grit::Repo.class_eval do
-      define_method :initialize do |path|
-        grit_repo.expect(:path, path)
-        @grit_repo = grit_repo
-      end
-      define_method :path do
-        @grit_repo.path
-      end
+    FileUtils.cd 'tmp' do
+      `git init`
+      `touch file`
+      `git add file`
+      `git commit -m "Added file"`
+      `touch file2`
+      `git add file2`
+      `git commit -m "Added file2"`
+      FileUtils.mkdir_p 'bacon'
     end
+
+  end
+
+  after do
+    FileUtils.rm_rf 'tmp/*'
   end
 
   it 'locates the closest git repo' do
-    git = Herodotus::Git.new('bacon')
-    git.repo.path.must_equal '/bacon/.git'
+    git.repo.path.must_match %r{/tmp/.git$}
+  end
+
+  it 'pulls out commits from the repo' do
+    git.commits.map(&:message).must_equal ['Added file2', 'Added file']
   end
 end
