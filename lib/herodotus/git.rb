@@ -3,11 +3,16 @@ module Herodotus
     attr_accessor :repo
     def initialize(base_dir)
       @base_dir = base_dir
-      @repo     = ::Grit::Repo.new(guess_repo)
+      @repo     = Grit::Repo.new(guess_repo)
     end
 
-    def commits
-      ::Grit::Commit.find_all(@repo, nil)
+    def commits(since_ref = nil)
+      if since_ref
+        output = repo.git.rev_list({'pretty' => 'raw'}, "#{since_ref}..")
+        Grit::Commit.list_from_string(repo, output)
+      else
+        Grit::Commit.find_all(@repo, since_ref)
+      end
     end
 
     private
