@@ -1,33 +1,45 @@
 require File.expand_path('spec_helper', File.dirname(__FILE__))
 
 describe Herodotus::Writer do
+  def writer
+    @writer ||= Herodotus::Writer.new('/tmp/herodotus')
+  end
   before do
-
-    Author = Struct.new(:name, :email)
-    Commit = Struct.new(:author, :authored_date, :message)
-    name = "Harold", email = "harold@example.com", date = Time.new('2012-02-04')
-
-    Herodotus::Git.class_eval do
-      define_method :commits do |since_ref|
-        [
-          Commit.new(Author.new(name, email), date, "this is a change"),
-          Commit.new(Author.new(name, email), date, "Another\nChAnGeLOg:\nBroke everything again. Don't update to this version."),
-          Commit.new(Author.new(name, email), date, "Another\nchangelog:\nNevermind, everything is fixed now."),
-        ]
-      end
+    FileUtils.mkdir_p '/tmp/herodotus'
+    FileUtils.cd '/tmp/herodotus' do
+      `git init`
+      `touch file1`
+      `git add file1`
+      `git commit -m "this is a change"`
+      `touch file2`
+      `git add file2`
+      `git commit -m "Another\nChAnGeLOg:\nBroke everything again. Don't update to this version."`
+      `touch file3`
+      `git add file3`
+      `git commit -m "Another\nchangelog:\nNevermind, everything is fixed now."`
     end
-    @writer = Herodotus::Writer.new(File.dirname(__FILE__))
   end
 
+  after { FileUtils.rm_rf '/tmp/herodotus' }
+
+
   it 'starts off with a default git, changes and a since_ref of nil' do
-    @writer.git.wont_be_nil
-    @writer.since_ref.must_be_nil
-    @writer.changes.wont_be_nil
+    writer.git.wont_be_nil
+    writer.since_ref.must_be_nil
+    writer.changes.wont_be_nil
   end
 
   it 'finds commits containing the changelog keyword on the message' do
-    @writer.changes.length.must_equal 2
-    @writer.changes.first.message.must_equal "Broke everything again. Don't update to this version."
-    @writer.changes.last.message.must_equal "Nevermind, everything is fixed now."
+    writer.changes.length.must_equal 2
+    writer.changes.first.message.must_equal "Broke everything again. Don't update to this version."
+    writer.changes.last.message.must_equal "Nevermind, everything is fixed now."
+  end
+
+  it 'appends changelog entries to the changelog file' do
+    writer.changelog_filename = File.expand_path('tmp/test_changes')
+    writer.append_to_changelog
+    changelog = IO.read(writer.changelog_filename)
+    changelog.must_include "Broke everything again. Don't update to this version."
+    changelog.must_include "Nevermind, everything is fixed now."
   end
 end

@@ -8,7 +8,8 @@ describe Herodotus::Git do
   end
 
   before do
-    FileUtils.cd 'tmp' do
+    FileUtils.mkdir_p '/tmp/herodotus'
+    FileUtils.cd '/tmp/herodotus' do
       `git init`
       `touch file`
       `git add file`
@@ -18,11 +19,10 @@ describe Herodotus::Git do
       `git commit -m "Added file2"`
       FileUtils.mkdir_p 'bacon'
     end
-
   end
 
   after do
-    FileUtils.rm_rf 'tmp/*'
+    FileUtils.rm_rf '/tmp/herodotus'
   end
 
   it 'locates the closest git repo' do
