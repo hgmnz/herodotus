@@ -3,3 +3,4 @@ require 'grit'
 
 require 'herodotus/git'
 require 'herodotus/writer'
+require 'herodotus/tasks'

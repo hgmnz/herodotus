@@ -1,0 +1,10 @@
+v0.0.1 (unreleased):
+
+2011-07-23  Harold Giménez <hgimenez@thoughtbot.com>
+Including "Changelog:" in the commit message will mark
+that commit as available for the changelog, and will use all text
+below the keyword.
+
+2011-07-27  Harold Giménez <hgimenez@thoughtbot.com>
+Add the ability for specifying which revision to write a changelog
+since. Usually, this will be a tag name.
