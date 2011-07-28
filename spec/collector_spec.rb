@@ -1,8 +1,8 @@
 require File.expand_path('spec_helper', File.dirname(__FILE__))
 
-describe Herodotus::Writer do
-  def writer
-    @writer ||= Herodotus::Writer.new('/tmp/herodotus')
+describe Herodotus::Collector do
+  def collector
+    @collector ||= Herodotus::Collector.new('/tmp/herodotus')
   end
   before do
     FileUtils.mkdir_p '/tmp/herodotus'
@@ -24,21 +24,21 @@ describe Herodotus::Writer do
 
 
   it 'starts off with a default git, changes and a since_ref of nil' do
-    writer.git.wont_be_nil
-    writer.since_ref.must_be_nil
-    writer.changes.wont_be_nil
+    collector.git.wont_be_nil
+    collector.since_ref.must_be_nil
+    collector.changes.wont_be_nil
   end
 
   it 'finds commits containing the changelog keyword on the message' do
-    writer.changes.length.must_equal 2
-    writer.changes.first.message.must_equal "Broke everything again. Don't update to this version."
-    writer.changes.last.message.must_equal "Nevermind, everything is fixed now."
+    collector.changes.length.must_equal 2
+    collector.changes.first.message.must_equal "Broke everything again. Don't update to this version."
+    collector.changes.last.message.must_equal "Nevermind, everything is fixed now."
   end
 
   it 'appends changelog entries to the changelog file' do
-    writer.changelog_filename = File.expand_path('tmp/test_changes')
-    writer.append_to_changelog
-    changelog = IO.read(writer.changelog_filename)
+    collector.changelog_filename = File.expand_path('tmp/test_changes')
+    collector.append_to_changelog
+    changelog = IO.read(collector.changelog_filename)
     changelog.must_include "Broke everything again. Don't update to this version."
     changelog.must_include "Nevermind, everything is fixed now."
   end

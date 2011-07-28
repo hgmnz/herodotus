@@ -1,5 +1,5 @@
 module Herodotus
-  class Writer
+  class Collector
     CHANGES_REGEX = /changelog.*?\n(.*)/mi
 
     def initialize(base_dir, since_ref = nil)
