@@ -1,6 +1,6 @@
 require 'bundler'
 require 'bundler/setup'
-require 'herodotus'
+require 'herodotus/tasks'
 Bundler::GemHelper.install_tasks
 include Rake::DSL
 
