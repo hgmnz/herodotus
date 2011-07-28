@@ -22,7 +22,6 @@ describe Herodotus::Collector do
 
   after { FileUtils.rm_rf '/tmp/herodotus' }
 
-
   it 'starts off with a default git, changes and a since_ref of nil' do
     collector.git.wont_be_nil
     collector.since_ref.must_be_nil
@@ -33,13 +32,5 @@ describe Herodotus::Collector do
     collector.changes.length.must_equal 2
     collector.changes.first.message.must_equal "Broke everything again. Don't update to this version."
     collector.changes.last.message.must_equal "Nevermind, everything is fixed now."
-  end
-
-  it 'appends changelog entries to the changelog file' do
-    collector.changelog_filename = File.expand_path('tmp/test_changes')
-    collector.append_to_changelog
-    changelog = IO.read(collector.changelog_filename)
-    changelog.must_include "Broke everything again. Don't update to this version."
-    changelog.must_include "Nevermind, everything is fixed now."
   end
 end

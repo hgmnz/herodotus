@@ -3,4 +3,4 @@ require 'grit'
 
 require 'herodotus/git'
 require 'herodotus/collector'
-require 'herodotus/tasks'
+require 'herodotus/reporter'
