@@ -9,7 +9,7 @@ module Herodotus
     end
 
     def print
-      @changes.each do |change|
+      @collector.changes.each do |change|
         puts change.log_entry
       end
     end

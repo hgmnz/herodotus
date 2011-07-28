@@ -22,6 +22,13 @@ module Herodotus
       end
     end
 
+    def print
+      reporter.print
+    end
+
+    def append_to_changelog
+      reporter.append_to_changelog
+    end
 
     def find_changes
       git.commits.each do |commit|
@@ -31,5 +38,9 @@ module Herodotus
       end
     end
     private :find_changes
+
+    def reporter
+      Herodotus::Reporter.new(self)
+    end
   end
 end

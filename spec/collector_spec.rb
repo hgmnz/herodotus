@@ -33,4 +33,18 @@ describe Herodotus::Collector do
     collector.changes.first.message.must_equal "Broke everything again. Don't update to this version."
     collector.changes.last.message.must_equal "Nevermind, everything is fixed now."
   end
+
+  it 'tells the reporter to print' do
+    reporter = mock('reporter')
+    collector.stubs(:reporter).returns(reporter)
+    reporter.expects(:print).once
+    collector.print
+  end
+
+  it 'tells the reporter to append to changelog' do
+    reporter = mock('reporter')
+    collector.stubs(:reporter).returns(reporter)
+    reporter.expects(:append_to_changelog).once
+    collector.append_to_changelog
+  end
 end
