@@ -22,5 +22,4 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'redgreen'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'ruby-debug19'
-  s.add_development_dependency 'minitest'
 end
