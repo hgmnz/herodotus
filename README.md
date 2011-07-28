@@ -37,3 +37,23 @@ tweak it at will before pushing. But the important pieces have been thought out
 at the time when you wrote the software changes - and was written right on the 
 commit message, and so maintaining the changelog could be easier.
 
+## Installation
+
+Add herodotus to your Gemfile and run bundle.
+
+If you're not using bundler, install via `gem install herodotus`
+
+Then add `require 'herodotus/tasks'` to your `Rakefile`. This will provide the rake tasks with which you interface with herodotus.
+
+## Usage
+
+Herodotus provides a couple of rake tasks: 
+
+```
+rake -T
+rake herodotus:append[since_ref]  # Appends changes to your changelog
+rake herodotus:print[since_ref]   # Prints out the change log from git
+```
+
+You can optionally pass the reference (usually a tag) from which herodotus will start to look for changelog messages in your commits.
+Note that some shells require you to wrap the rake task in double quotes when passing arguments. For example: `rake "herodotus:print[v1]"`
