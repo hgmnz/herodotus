@@ -4,6 +4,7 @@ describe Herodotus::Reporter do
   def collector
     @collector ||= Herodotus::Collector.new('/tmp/herodotus')
   end
+
   before do
     FileUtils.mkdir_p '/tmp/herodotus'
     FileUtils.cd '/tmp/herodotus' do
