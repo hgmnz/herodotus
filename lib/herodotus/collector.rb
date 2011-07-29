@@ -1,6 +1,6 @@
 module Herodotus
   class Collector
-    attr_accessor :git, :since_ref, :changes, :changelog_filename
+    attr_accessor :git, :since_ref, :changes
     CHANGES_REGEX = /changelog.*?\n(.*)/mi.freeze
 
     def initialize(base_path, since_ref = nil)
