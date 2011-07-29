@@ -1,6 +1,8 @@
 Herodotus
 ---------
 
+[![Build Status](http://travis-ci.org/hgimenez/herodotus.png)](http://travis-ci.org/hgimenez/herodotus)
+
 Herodotus, an ancient greek historian and story teller will
 help you keep a changelog updated.
 
