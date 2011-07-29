@@ -9,9 +9,9 @@ module Herodotus
     class << self
       attr_accessor :config
     end
+    @config = Configuration.new
 
     def self.run
-      self.config ||= Configuration.new
       yield config
     end
 
