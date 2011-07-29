@@ -1,8 +1,8 @@
 module Herodotus
   class Git
-    attr_accessor :repo
-    def initialize(base_dir)
-      @base_dir = base_dir
+    attr_accessor :repo, :base_path
+    def initialize(base_path = nil)
+      @base_path = base_path || Configuration.config.base_path
       @repo     = Grit::Repo.new(guess_repo)
     end
 
@@ -17,7 +17,7 @@ module Herodotus
 
     private
     def guess_repo
-      current_dir = File.expand_path(@base_dir)
+      current_dir = File.expand_path(@base_path)
       until current_dir == '/' do
         maybe_repo = File.expand_path(".git", current_dir)
         if File.directory?(maybe_repo)
