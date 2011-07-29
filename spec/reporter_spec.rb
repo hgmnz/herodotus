@@ -40,5 +40,6 @@ describe Herodotus::Reporter do
     changelog = IO.read(reporter.changelog_filename)
     changelog.must_include "Broke everything again. Don't update to this version."
     changelog.must_include "Nevermind, everything is fixed now."
+    FileUtils.rm_rf 'tmp/test_changes'
   end
 end
