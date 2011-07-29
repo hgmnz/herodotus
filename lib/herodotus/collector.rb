@@ -42,5 +42,6 @@ module Herodotus
     def reporter
       Herodotus::Reporter.new(self)
     end
+    private :reporter
   end
 end
