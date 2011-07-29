@@ -5,7 +5,7 @@ module Herodotus
 
     def initialize(collector)
       @collector          = collector
-      @changelog_filename = 'CHANGES'
+      @changelog_filename = Configuration.config.changelog_filename
     end
 
     def print

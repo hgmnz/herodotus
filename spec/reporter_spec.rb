@@ -28,11 +28,6 @@ describe Herodotus::Reporter do
     reporter.collector.must_equal collector
   end
 
-  it 'has a default changelog filename of CHANGES' do
-    reporter = Herodotus::Reporter.new(collector)
-    reporter.changelog_filename.must_equal 'CHANGES'
-  end
-
   it 'appends changelog entries to the changelog file' do
     reporter = Herodotus::Reporter.new(collector)
     reporter.changelog_filename = File.expand_path('tmp/test_changes')
@@ -41,5 +36,14 @@ describe Herodotus::Reporter do
     changelog.must_include "Broke everything again. Don't update to this version."
     changelog.must_include "Nevermind, everything is fixed now."
     FileUtils.rm_rf 'tmp/test_changes'
+  end
+
+  it 'uses the configured changelog_filename' do
+    Herodotus::Configuration.run do |config|
+      config.changelog_filename = 'los cambios van aqui!'
+    end
+
+    reporter = Herodotus::Reporter.new('base dir')
+    reporter.changelog_filename.must_equal 'los cambios van aqui!'
   end
 end
