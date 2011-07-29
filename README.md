@@ -18,7 +18,7 @@ communicate what should go in the changelog. Here are the rules:
 
 * Tag every release, so that it is easy to tell Herodotus how far back to start
   looking for changes.
-* To start writing notes for use in the changelog, use the following format on 
+* To start writing notes for use in the changelog, use the following format on
   your git commit message:
 
 
@@ -32,11 +32,11 @@ Anything below this line will go on the changelog. Tell your users how to
 upgrade the app, what has been depracated, what will break, etc.
 ```
 
-It doesn't need to be exact either. Herodotus will simply extract these 
-comments, format them by adding the author and date, and either append them to 
-your CHANGES file, or print them out to standard out. Once it's there you can 
-tweak it at will before pushing. But the important pieces have been thought out 
-at the time when you wrote the software changes - and was written right on the 
+It doesn't need to be exact either. Herodotus will simply extract these
+comments, format them by adding the author and date, and either append them to
+your CHANGES file, or print them out to standard out. Once it's there you can
+tweak it at will before pushing. But the important pieces have been thought out
+at the time when you wrote the software changes - and was written right on the
 commit message, and so maintaining the changelog could be easier.
 
 ## Installation
@@ -49,7 +49,7 @@ Then add `require 'herodotus/tasks'` to your `Rakefile`. This will provide the r
 
 ## Usage
 
-Herodotus provides a couple of rake tasks: 
+Herodotus provides a couple of rake tasks:
 
 ```
 rake -T
@@ -59,3 +59,14 @@ rake herodotus:print[since_ref]   # Prints out the change log from git
 
 You can optionally pass the reference (usually a tag) from which herodotus will start to look for changelog messages in your commits.
 Note that some shells require you to wrap the rake task in double quotes when passing arguments. For example: `rake "herodotus:print[v1]"`
+
+## Configuring
+
+You can configure Herodotus. Drop this somewhere sensible like an initializer or anywhere where it loads prior to running the rake tasks:
+
+```ruby
+Herodotus::Configuration.run do |config|
+  config.base_path          = '/path/to/project/root'
+  config.changelog_filename = 'CHANGELOG.md'
+end
+```
