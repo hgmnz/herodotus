@@ -70,3 +70,9 @@ Herodotus::Configuration.run do |config|
   config.changelog_filename = 'CHANGELOG.md'
 end
 ```
+
+## License
+
+Herodotus is distributed under the MIT license.
+
+Copyright 2011 - Harold Giménez
