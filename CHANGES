@@ -1,5 +1,16 @@
-v0.0.1 [2011-07-28]:
+v0.0.2 [2011-07-29]
+-------------------
+2011-07-29  Harold Giménez <hgimenez@thoughtbot.com>
+Introduces ability to configure Herodotus. Here's an example on how to
+configure it:
 
+    Herodotus::Configuration.run do |config|
+      config.base_path          = '/path/to/project/root'
+      config.changelog_filename = 'CHANGELOG.md'
+    end
+
+v0.0.1 [2011-07-28]
+-------------------
 2011-07-23  Harold Giménez <hgimenez@thoughtbot.com>
 Including "Changelog:" in the commit message will mark
 that commit as available for the changelog, and will use all text
