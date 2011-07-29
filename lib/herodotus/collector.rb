@@ -3,8 +3,8 @@ module Herodotus
     attr_accessor :git, :since_ref, :changes, :changelog_filename
     CHANGES_REGEX = /changelog.*?\n(.*)/mi.freeze
 
-    def initialize(base_dir, since_ref = nil)
-      @git                = Git.new(base_dir)
+    def initialize(base_path, since_ref = nil)
+      @git                = Git.new(base_path)
       @since_ref          = since_ref
       @changes            = []
       find_changes
