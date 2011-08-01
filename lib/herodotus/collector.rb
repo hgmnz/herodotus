@@ -33,7 +33,7 @@ module Herodotus
     def find_changes
       git.commits.each do |commit|
         if commit.message =~ CHANGES_REGEX
-          @changes.unshift Change.new(commit.author, commit.authored_date, $1)
+          @changes << Change.new(commit.author, commit.authored_date, $1)
         end
       end
     end

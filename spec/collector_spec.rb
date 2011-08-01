@@ -50,8 +50,8 @@ describe Herodotus::Collector do
 
     it 'finds commits containing the changelog keyword on the message' do
       collector.changes.length.must_equal 2
-      collector.changes.first.message.must_equal "Broke everything again. Don't update to this version."
-      collector.changes.last.message.must_equal "Nevermind, everything is fixed now."
+      collector.changes.first.message.must_equal "Nevermind, everything is fixed now."
+      collector.changes.last.message.must_equal "Broke everything again. Don't update to this version."
     end
   end
 end
