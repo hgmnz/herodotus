@@ -1,6 +1,14 @@
 require File.expand_path('spec_helper', File.dirname(__FILE__))
 
 describe Herodotus::Collector do
+  before do
+    FileUtils.mkdir_p '/tmp/herodotus'
+    FileUtils.cd '/tmp/herodotus' do
+      `git init`
+    end
+  end
+  after  { FileUtils.rm_rf   '/tmp/herodotus' }
+
   def collector
     @collector ||= Herodotus::Collector.new('/tmp/herodotus')
   end
@@ -27,9 +35,7 @@ describe Herodotus::Collector do
 
   describe 'with some commits' do
     before do
-      FileUtils.mkdir_p '/tmp/herodotus'
       FileUtils.cd '/tmp/herodotus' do
-        `git init`
         `touch file1`
         `git add file1`
         `git commit -m "this is a change"`
@@ -42,13 +48,10 @@ describe Herodotus::Collector do
       end
     end
 
-    after { FileUtils.rm_rf '/tmp/herodotus' }
-
     it 'finds commits containing the changelog keyword on the message' do
       collector.changes.length.must_equal 2
       collector.changes.first.message.must_equal "Broke everything again. Don't update to this version."
       collector.changes.last.message.must_equal "Nevermind, everything is fixed now."
     end
   end
-
 end
