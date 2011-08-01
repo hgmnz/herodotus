@@ -7,7 +7,7 @@ describe Herodotus::Collector do
       `git init`
     end
   end
-  after  { FileUtils.rm_rf   '/tmp/herodotus' }
+  after { FileUtils.rm_rf '/tmp/herodotus' }
 
   def collector
     @collector ||= Herodotus::Collector.new('/tmp/herodotus')
